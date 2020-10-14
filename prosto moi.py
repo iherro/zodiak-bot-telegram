@@ -1,6 +1,8 @@
 import telebot
 from telebot import types
 
+ище = еудуище
+
 commands = {
     'start': 'Стартовое сообщение и предложение зарегистрироваться',
     'help': 'Информаци о боте и список доступных команд',
@@ -26,3 +28,23 @@ def get_data_keyboard():
 @bot.message_handler(commands=['registration'])
 def command_registration(m):
     registration('reg:stage l:none', m.chat.id, m.chat.first_name, m.chat.username)
+
+
+@bot.message_handler(commands['/help'])
+def command_help(m):
+    cid = m.chat.id
+    help_text = 'Доступны следующие команды \n'
+    for key in commands:
+        help_text += '/' + key ': '
+        help_text += commands[key] + '\n'
+        message(cid, help text, reply_markup=det_data_keyboard())
+
+        help_text = ('Описание кнопки \n Кнопка "Сегодня" выводит расписание на сегодняшний день, '
+                     'причем с учётной типа нидели (числитель/наменатель), но есть один нюанс: если сегоднявоскресенье'
+                     'или время больше, чем 19:00, то выводится расписание на следующий день\n ')
+        bot.send_message(cid, help_text, reply_markup=get_data_keyboard())
+        guide_url = "@fuccbwoi"
+        help_text = 'Более подробную инструкцию и помощь вы сможете узнать написав мне: {}'.format(guide_url)
+        bot.send_message(cid, help_text, reply_markup=get_data_keyboard())
+    bot.polling(none_stop=True)
+
